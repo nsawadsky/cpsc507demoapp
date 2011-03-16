@@ -52,12 +52,6 @@ namespace CPSC507TestApp
 
         public ItemDictionaryComparer(IDictionary<long, IItem> dict1, IDictionary<long, IItem> dict2)
         {
-            // <pex>
-            if (dict1 == (IDictionary<long, IItem>)null)
-                throw new ArgumentNullException("dict1");
-            if (dict2 == (IDictionary<long, IItem>)null)
-                throw new ArgumentNullException("dict2");
-            // </pex>
             this.dict1 = dict1;
             this.dict2 = dict2;
         }
