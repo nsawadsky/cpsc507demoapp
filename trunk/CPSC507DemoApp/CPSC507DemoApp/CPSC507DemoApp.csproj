@@ -43,14 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ParamClass.cs" />
-    <Compile Include="SimpleClass.cs" />
-    <Compile Include="IItem.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="ItemDictionaryComparer.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ConfigurationManager.cs" />
+    <Compile Include="CostAndApplicablePromotions.cs" />
+    <Compile Include="ItemCategory.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="OrderItem.cs" />
+    <Compile Include="OrderItemAndQuantity.cs" />
+    <Compile Include="Promotion.cs" />
+    <Compile Include="PromotionSavings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValInterface.cs" />
+    <Compile Include="Serializer.cs" />
+    <Compile Include="SerializerException.cs" />
+    <Compile Include="StorageException.cs" />
+    <Compile Include="StorageManager.cs" />
+    <Compile Include="TestInputGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

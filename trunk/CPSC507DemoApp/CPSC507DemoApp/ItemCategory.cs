@@ -5,10 +5,10 @@ using System.Text;
 
 namespace CPSC507DemoApp
 {
-    class Program
+    public enum ItemCategory
     {
-        static void Main(string[] args)
-        {
-        }
+        Book,
+        Electronics,
+        Apparel
     }
 }
