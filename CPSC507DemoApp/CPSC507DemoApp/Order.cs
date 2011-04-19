@@ -66,7 +66,11 @@ namespace CPSC507DemoApp
         private List<PromotionSavings> calculateAllPromotionSavings(IList<Promotion> promotionList) {
             List<PromotionSavings> result = new List<PromotionSavings>();
             foreach (Promotion promo in promotionList) {
-                result.Add(calculatePromotionSavings(promo));
+                PromotionSavings savings = calculatePromotionSavings(promo);
+                if (savings != null)
+                {
+                    result.Add(savings);
+                }
             }
             return result;
         }
