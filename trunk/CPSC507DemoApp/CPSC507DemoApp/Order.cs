@@ -40,6 +40,11 @@ namespace CPSC507DemoApp
             }
         }
 
+        public ICollection<OrderItemAndQuantity> getLineItems()
+        {
+            return lineItems.Values;
+        }
+
         public CostAndApplicablePromotions calculateCost(IList<Promotion> promotionList, 
                 int allowablePromotions) {
             double totalCost = calculateCostBeforePromotions();
