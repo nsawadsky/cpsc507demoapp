@@ -10,6 +10,22 @@ namespace CPSC507DemoApp
         private Promotion promotion;
         private double savings;
 
+        public PromotionSavings(Promotion promotion, double savings)
+        {
+            this.promotion = promotion;
+            this.savings = savings;
+        }
+
+        public override bool Equals(Object obj)
+        {
+            PromotionSavings target = obj as PromotionSavings;
+            if (target == null)
+            {
+                return false;
+            }
+            return savings == target.savings && Object.Equals(promotion, target.promotion);
+        }
+
         public Promotion getPromotion()
         {
             return promotion;
@@ -20,10 +36,5 @@ namespace CPSC507DemoApp
             return savings;
         }
 
-        public PromotionSavings(Promotion promotion, double savings)
-        {
-            this.promotion = promotion;
-            this.savings = savings;
-        }
     }
 }
