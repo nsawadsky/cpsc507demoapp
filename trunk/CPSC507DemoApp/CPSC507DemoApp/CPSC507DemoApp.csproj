@@ -74,7 +74,6 @@
     <Compile Include="SerializerException.cs" />
     <Compile Include="StorageException.cs" />
     <Compile Include="StorageManager.cs" />
-    <Compile Include="TestInputGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
