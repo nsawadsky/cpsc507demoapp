@@ -12,6 +12,14 @@ namespace CPSC507DemoApp
 
         public OrderItemAndQuantity(OrderItem item, int quantity)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException("item");
+            }
+            if (quantity < 0)
+            {
+                throw new ArgumentOutOfRangeException("quantity");
+            }
             this.item = item;
             this.quantity = quantity;
         }
