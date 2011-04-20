@@ -15,16 +15,13 @@ namespace CPSC507DemoApp
     [TestClass]
     public partial class OrderTest
     {
-        [PexMethod]
+        [PexMethod(Timeout = 100, MaxRunsWithoutNewTests = 300, MaxConstraintSolverTime = 2)]
         public void testCalculateCost(
             [PexAssumeUnderTest]Order target,
             [PexAssumeNotNull]Promotion[] promotions,
             int allowablePromotions
         )
         {
-            PexAssume.AreElementsNotNull(promotions);
-            PexAssume.InRange(allowablePromotions, 0, 1000);
-
             CostAndApplicablePromotions result = target.calculateCost(new List<Promotion>(promotions), 
                 allowablePromotions);
 
@@ -110,7 +107,7 @@ namespace CPSC507DemoApp
                             if (descriptionKeywordMatch)
                             {
                                 promoMatched = true;
-                                savings += promo.getDiscount() * itemAndQuantity.getItem().getPrice() * itemAndQuantity.getQuantity();
+                                savings += promo.getDiscount() * (itemAndQuantity.getItem().getPrice() * itemAndQuantity.getQuantity());
                             }
                         }
                     }

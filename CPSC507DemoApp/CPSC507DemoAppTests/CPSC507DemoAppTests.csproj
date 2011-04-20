@@ -59,9 +59,6 @@
     <Folder Include="CPSC507TestApp\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OrderTest.calculateCost.g.cs">
-      <DependentUpon>OrderTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="OrderTest.cs" />
     <Compile Include="OrderTest.testCalculateCost.g.cs">
       <DependentUpon>OrderTest.cs</DependentUpon>

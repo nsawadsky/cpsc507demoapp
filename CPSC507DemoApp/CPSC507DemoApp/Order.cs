@@ -7,46 +7,52 @@ namespace CPSC507DemoApp
 {
     public class Order
     {
-        private IDictionary<String, OrderItemAndQuantity> lineItems = new Dictionary<String, OrderItemAndQuantity>();
+        private IList<OrderItemAndQuantity> lineItems;
         private DateTime creationTime;
 
-        public Order(DateTime creationTime) {
+        public Order(DateTime creationTime, IList<OrderItemAndQuantity> lineItems) {
+            if (lineItems == null)
+            {
+                throw new ArgumentNullException("lineItems");
+            }
+            foreach (OrderItemAndQuantity lineItem in lineItems)
+            {
+                if (lineItem == null)
+                {
+                    throw new ArgumentNullException("element of lineItems");
+                }
+            }
             this.creationTime = creationTime;
+            this.lineItems = lineItems;
         }
         public DateTime getCreationTime() {
             return creationTime;
         }
     
-        public void addItems(OrderItem item, int quantity) {
-            OrderItemAndQuantity lineItem = null;
-            lineItems.TryGetValue(item.getId(), out lineItem);
-            if (lineItem == null) {
-                lineItem = new OrderItemAndQuantity(item, quantity);
-                lineItems[item.getId()] = lineItem;
-            } else {
-                lineItem.setQuantity(lineItem.getQuantity() + quantity);
-            }
-        }
-    
-        public void removeItems(OrderItem item, int quantity) {
-            OrderItemAndQuantity lineItem = null;
-            lineItems.TryGetValue(item.getId(), out lineItem);
-            if (lineItem != null) {
-                if (lineItem.getQuantity() > quantity) {
-                    lineItem.setQuantity(lineItem.getQuantity() - quantity);
-                } else {
-                    lineItems.Remove(item.getId());
-                }
-            }
-        }
-
-        public ICollection<OrderItemAndQuantity> getLineItems()
+        public IList<OrderItemAndQuantity> getLineItems()
         {
-            return lineItems.Values;
+            return lineItems;
         }
 
         public CostAndApplicablePromotions calculateCost(IList<Promotion> promotionList, 
                 int allowablePromotions) {
+
+            if (promotionList == null)
+            {
+                throw new ArgumentNullException("promotionList");
+            }
+            foreach (Promotion promo in promotionList)
+            {
+                if (promo == null)
+                {
+                    throw new ArgumentNullException("element of promotionList");
+                }
+            }
+            if (allowablePromotions < 0)
+            {
+                throw new ArgumentOutOfRangeException("allowablePromotions");
+            }
+
             double totalCost = calculateCostBeforePromotions();
         
             List<PromotionSavings> promoSavingsList = new List<PromotionSavings>();
@@ -83,7 +89,7 @@ namespace CPSC507DemoApp
         private PromotionSavings calculatePromotionSavings(Promotion promotion) {
             if (creationTime.CompareTo(promotion.getStartTime()) >= 0 && 
                     creationTime.CompareTo(promotion.getEndTime()) <= 0) {
-                foreach (OrderItemAndQuantity lineItem in lineItems.Values) {
+                foreach (OrderItemAndQuantity lineItem in lineItems) {
                     OrderItem orderItem = lineItem.getItem();
                     if (orderItem.getCategory().Equals(promotion.getCategory())) {
                         bool descriptionMatch = false;
@@ -110,7 +116,7 @@ namespace CPSC507DemoApp
     
         private double calculateCostBeforePromotions() {
             double result = 0.0;
-            foreach (OrderItemAndQuantity lineItem in lineItems.Values){
+            foreach (OrderItemAndQuantity lineItem in lineItems){
                 result += lineItem.getQuantity() * lineItem.getItem().getPrice();
             }
             return result;

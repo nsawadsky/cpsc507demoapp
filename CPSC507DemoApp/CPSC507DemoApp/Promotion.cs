@@ -17,6 +17,28 @@ namespace CPSC507DemoApp
         public Promotion(String id, ItemCategory category, List<String> descriptionKeywords,
                 DateTime startTime, DateTime endTime, double discount)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException("id");
+            }
+            if (descriptionKeywords != null)
+            {
+                foreach (String keyword in descriptionKeywords)
+                {
+                    if (keyword == null)
+                    {
+                        throw new ArgumentNullException("element of descriptionKeywords");
+                    }
+                }
+            }
+            if (discount < 0.0)
+            {
+                throw new ArgumentOutOfRangeException("discount");
+            }
+            if (discount > 1.0)
+            {
+                throw new ArgumentOutOfRangeException("discount");
+            }
             this.id = id;
             this.category = category;
             this.descriptionKeywords = new List<String>(descriptionKeywords);
