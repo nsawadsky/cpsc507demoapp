@@ -7,23 +7,11 @@ namespace CPSC507DemoApp
 {
     public class Order
     {
-        private IList<OrderItemAndQuantity> lineItems;
+        private IList<OrderItemAndQuantity> lineItems = new List<OrderItemAndQuantity>();
         private DateTime creationTime;
 
-        public Order(DateTime creationTime, IList<OrderItemAndQuantity> lineItems) {
-            if (lineItems == null)
-            {
-                throw new ArgumentNullException("lineItems");
-            }
-            foreach (OrderItemAndQuantity lineItem in lineItems)
-            {
-                if (lineItem == null)
-                {
-                    throw new ArgumentNullException("element of lineItems");
-                }
-            }
+        public Order(DateTime creationTime) {
             this.creationTime = creationTime;
-            this.lineItems = lineItems;
         }
         public DateTime getCreationTime() {
             return creationTime;
@@ -32,6 +20,19 @@ namespace CPSC507DemoApp
         public IList<OrderItemAndQuantity> getLineItems()
         {
             return lineItems;
+        }
+
+        public void addItems(OrderItem item, int quantity)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException("item");
+            }
+            if (quantity < 0)
+            {
+                throw new ArgumentOutOfRangeException("quantity");
+            }
+            lineItems.Add(new OrderItemAndQuantity(item, quantity));
         }
 
         public CostAndApplicablePromotions calculateCost(IList<Promotion> promotionList, 
