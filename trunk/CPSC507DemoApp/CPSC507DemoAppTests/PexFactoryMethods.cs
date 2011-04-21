@@ -37,7 +37,14 @@ namespace CPSC507DemoAppTests
         [PexFactoryMethod(typeof(Order))]
         public static Order createOrder(DateTime creationTime, OrderItemAndQuantity[] lineItems)
         {
-            Order order = new Order(creationTime, lineItems);
+            Order order = new Order(creationTime);
+            if (lineItems != null)
+            {
+                foreach (OrderItemAndQuantity lineItem in lineItems)
+                {
+                    order.addItems(lineItem.getItem(), lineItem.getQuantity());
+                }
+            }
             return order;
         }
     }
