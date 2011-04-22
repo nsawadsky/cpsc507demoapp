@@ -1,10 +1,13 @@
 // <copyright file="OrderTest.cs">Copyright ©  2011</copyright>
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CPSC507DemoApp;
 using Microsoft.Pex.Framework;
 using Microsoft.Pex.Framework.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CPSC507DemoAppTests;
+using Microsoft.Pex.Framework.Generated;
 
 namespace CPSC507DemoApp
 {
@@ -22,7 +25,7 @@ namespace CPSC507DemoApp
             int allowablePromotions
         )
         {
-            CostAndApplicablePromotions result = target.calculateCost(new List<Promotion>(promotions), 
+            CostAndApplicablePromotions result = target.calculateCost(new List<Promotion>(promotions),
                 allowablePromotions);
 
             CostAndApplicablePromotions expectedResult = calculateCostAndApplicablePromotions(
@@ -86,7 +89,7 @@ namespace CPSC507DemoApp
                     if (itemAndQuantity.getItem().getCategory() == promo.getCategory())
                     {
                         if (target.getCreationTime().CompareTo(promo.getStartTime()) >= 0 &&
-                            target.getCreationTime().CompareTo(promo.getEndTime()) <= 0) 
+                            target.getCreationTime().CompareTo(promo.getEndTime()) <= 0)
                         {
                             bool descriptionKeywordMatch = false;
                             if (promo.getDescriptionKeywords() == null || promo.getDescriptionKeywords().Count == 0)
@@ -95,9 +98,10 @@ namespace CPSC507DemoApp
                             }
                             else
                             {
+                                String[] tokens = itemAndQuantity.getItem().getDescription().Split(new String[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                                 foreach (String keyword in promo.getDescriptionKeywords())
                                 {
-                                    if (itemAndQuantity.getItem().getDescription().Contains(keyword))
+                                    if (tokens.Contains(keyword))
                                     {
                                         descriptionKeywordMatch = true;
                                         break;
@@ -127,6 +131,31 @@ namespace CPSC507DemoApp
                 cost -= savings.getSavings();
             }
             return new CostAndApplicablePromotions(cost, applicablePromotions);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void testCalculateCostThrowsArgumentNullException356()
+        {
+            Order order;
+            order =
+              PexFactoryMethods.createOrder(default(DateTime), (OrderItemAndQuantity[])null);
+            Promotion[] promotions = new Promotion[1];
+            this.testCalculateCost(order, promotions, 0);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void testCalculateCostThrowsArgumentNullException824()
+        {
+            Order order;
+            Promotion promotion;
+            order =
+              PexFactoryMethods.createOrder(default(DateTime), (OrderItemAndQuantity[])null);
+            string[] ss = new string[0];
+            promotion = PexFactoryMethods.createPromotion
+                            ("", ItemCategory.Book, ss, default(DateTime), default(DateTime), 0);
+            Promotion[] promotions = new Promotion[2];
+            promotions[0] = promotion;
+            this.testCalculateCost(order, promotions, 0);
         }
     }
 }

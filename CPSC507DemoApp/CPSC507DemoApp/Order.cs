@@ -98,9 +98,11 @@ namespace CPSC507DemoApp
                                 promotion.getDescriptionKeywords().Count == 0) {
                             descriptionMatch = true;
                         } else {
+                            String[] tokens = orderItem.getDescription().Split(new String[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                             foreach (String keyword in promotion.getDescriptionKeywords()) {
-                                if (orderItem.getDescription().Contains(keyword)) {
+                                if (tokens.Contains(keyword)) {
                                     descriptionMatch = true;
+                                    break;
                                 }
                             }
                         }
